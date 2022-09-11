@@ -1,4 +1,5 @@
 from inference.predict import get_model_response
+from report.generate_report import get_report
 
 def run(
     url: str = None,
@@ -11,3 +12,5 @@ def run(
         inf = get_model_response(input_path)
     elif(url):
         inf = get_model_response(url, fetch=True)
+    
+    get_report()

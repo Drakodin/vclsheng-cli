@@ -5,9 +5,13 @@ from operator import itemgetter
 from typing import Any, Dict
 
 
-def get_report(prediction: Dict[str, np.float32], verbose: bool) -> Dict[str, Any]:
-    report = Report(verbose).analyze(prediction).generate()
-    return report
+def get_report(prediction: Dict[str, np.float32], verbose: bool, audio_results = None) -> Dict[str, Any]:
+    report = Report(verbose).analyze_prediction(prediction)
+
+    if (audio_results):
+        report.analyze_audio_spec(audio_results)
+
+    return report.generate()
 
 class Report:
     def __init__(self, verbose: bool):
@@ -15,7 +19,7 @@ class Report:
         self.report_dict = {}
         self.verbose = verbose
     
-    def analyze(self, prediction: Dict[str, np.float32]):
+    def analyze_prediction(self, prediction: Dict[str, np.float32]):
         if (self.verbose):
             self.report_dict.update({"probabilities", {
                 "masculine": f"{prediction['masculine']}%",
@@ -25,6 +29,9 @@ class Report:
         
         base_prediction = max(list(prediction.items()), key=itemgetter(1))
         self.report_dict.update({"result", base_prediction[0]})
+        return self
+    
+    def analyze_audio_spec(self, audio_spec_data: dict):
         return self
     
     def generate(self):
