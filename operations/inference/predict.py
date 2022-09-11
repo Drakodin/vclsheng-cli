@@ -34,7 +34,7 @@ def audio_to_tensor(audio) -> torch.Tensor:
     return tensor
 
 async def audio_to_tensor_async(url) -> torch.Tensor:
-    async with aiohttp.Clientsession() as session:
+    async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             buffer = io.BytesIO(await response.read())
 
