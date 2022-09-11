@@ -5,11 +5,13 @@ import librosa
 import numpy as np
 import io
 
-from arch import ANN
+from pathlib import Path
+from operations.inference.arch import ANN
 
 model = ANN()
 device = torch.device("cpu")
-model.load_state_dict(torch.load("model.pth", map_location="cpu"))
+MODEL_LOCATION = Path(__file__, '..').resolve().joinpath("model.pth")
+model.load_state_dict(torch.load(MODEL_LOCATION, map_location="cpu"))
 model.eval()
 
 def get_model_response(path: str, fetch: bool = False):

@@ -23,7 +23,7 @@ def main():
     )
 
     parser.add_argument(
-        "-v",
+        "-vb",
         "--verbose",
         help="Flag for more verbose reports. Enabling this enables all optional detail injections.",
         dest="verbose",
@@ -57,6 +57,10 @@ def main():
     )
 
     try:
+        if (len(sys.argv) == 1):
+            parser.print_help()
+            sys.exit(1)
+        
         args = parser.parse_args()
         run(
             args.url,
@@ -67,4 +71,4 @@ def main():
     except argparse.ArgumentError as error:
         sys.stderr.write(error.message)
         sys.stderr.write(ARG_ERROR_MESSAGE)
-        parser.print_help()
+        parser.print_help(sys.stderr)
