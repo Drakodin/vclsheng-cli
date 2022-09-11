@@ -18,6 +18,7 @@ def get_model_response(path: str, fetch: bool = False):
     tensor = None
 
     if fetch:
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy)
         tensor = asyncio.run(audio_to_tensor_async(path))
     else:
         tensor = audio_to_tensor(path)
