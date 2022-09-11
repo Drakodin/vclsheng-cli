@@ -21,14 +21,14 @@ class Report:
     
     def analyze_prediction(self, prediction: Dict[str, np.float32]):
         if (self.verbose):
-            self.report_dict.update({"probabilities", {
+            self.report_dict["probabilities"] = {
                 "masculine": f"{prediction['masculine']}%",
                 "feminine": f"{prediction['feminine']}%"
-            }})
-            self.report_dict.update({"notice", "Using 40 Mel Frequency Cepstrum Coefficients parsed by Librosa."})
+            }
+            self.report_dict["notice"] = "Using 40 Mel Frequency Cepstrum Coefficients parsed by Librosa."
         
         base_prediction = max(list(prediction.items()), key=itemgetter(1))
-        self.report_dict.update({"result", base_prediction[0]})
+        self.report_dict["result"] = base_prediction[0]
         return self
     
     def analyze_audio_spec(self, audio_spec_data: dict):
