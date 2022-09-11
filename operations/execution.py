@@ -13,4 +13,4 @@ def run(
     elif(url):
         inf = get_model_response(url, fetch=True)
     
-    get_report()
+    get_report(inf, verbose)

@@ -1,10 +1,11 @@
 import argparse
+import sys
+from constants.messages import ARG_ERROR_MESSAGE, VERSION
 
 from operations.execution import run
 
-
 def main():
-    parser = argparse.ArgumentParser
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter, add_help=False)
     parser.add_argument(
         "-u",
         "--url",
@@ -39,4 +40,31 @@ def main():
         default=False
     )
 
-    args = parser.parse_args()
+    parser.add_argument(
+        "-h",
+        "--help",
+        action="help",
+        default=argparse.SUPPRESS,
+        help="Show help text and exit."
+    )
+
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        help="Show CLI version text and exit.",
+        version=f"v{VERSION}"
+    )
+
+    try:
+        args = parser.parse_args()
+        run(
+            args.url,
+            args.input_path,
+            args.verbose,
+            args.audio_spec
+        )
+    except argparse.ArgumentError as error:
+        sys.stderr.write(error.message)
+        sys.stderr.write(ARG_ERROR_MESSAGE)
+        parser.print_help()
