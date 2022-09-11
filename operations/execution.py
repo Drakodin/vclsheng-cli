@@ -1,5 +1,5 @@
-from inference.predict import get_model_response
-from report.generate_report import get_report
+from operations.inference.predict import get_model_response
+from operations.report.generate_report import get_report
 
 def run(
     url: str = None,
