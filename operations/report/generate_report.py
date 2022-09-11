@@ -22,8 +22,8 @@ class Report:
     def analyze_prediction(self, prediction: Dict[str, np.float32]):
         if (self.verbose):
             self.report_dict["probabilities"] = {
-                "masculine": f"{prediction['masculine']}%",
-                "feminine": f"{prediction['feminine']}%"
+                "masculine": f"{prediction['masculine'] * 100.00}%",
+                "feminine": f"{prediction['feminine'] * 100.00}%"
             }
             self.report_dict["notice"] = "Using 40 Mel Frequency Cepstrum Coefficients parsed by Librosa."
         
